@@ -1,0 +1,66 @@
+﻿@model WebApplication1.Models.user
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Register</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <p>Please enter a unique username and password to register as a member of the North Shore Health Network. Registering allows you to access lab results, book appointments, and much more!</p>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.username, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.password, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @if(Session["role"] != null)
+    {
+        if(Session["role"].ToString() == "ADM")
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.user_role, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("user-role", new List<SelectListItem> { new SelectListItem { Text = "Admin", Value = "ADM" }, new SelectListItem { Text = "User", Value = "USR" } }, "Select Role", htmlAttributes: new { @class = "btn", id = "register-btn" })
+                </div>
+            </div>
+        }
+    }
+
+    <div class="form-group">
+        <div class="col-md-10">@ViewBag.RegisterStatus</div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Register" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back Home", "Index")
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

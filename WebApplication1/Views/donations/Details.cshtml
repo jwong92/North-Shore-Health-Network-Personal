@@ -1,0 +1,128 @@
+﻿@model WebApplication1.Models.donation
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details of Each Donation</h2>
+<hr />
+
+<div>
+    <h4 class="admin-subheading">Account Details</h4>
+    <dl class="dl-horizontal">
+        @Html.HiddenFor(model => model.id)
+        @Html.HiddenFor(model => model.account_id)
+        @Html.HiddenFor(model => model.north_shore_accounts.id)
+        @Html.HiddenFor(model => model.north_shore_accounts.payment_information.id)
+        @Html.HiddenFor(model => model.north_shore_accounts.payment_info)
+
+        <dt>
+            @Html.DisplayNameFor(model => model.north_shore_accounts.fname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.north_shore_accounts.fname)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.north_shore_accounts.lname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.north_shore_accounts.lname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.north_shore_accounts.address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.north_shore_accounts.address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.north_shore_accounts.city)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.north_shore_accounts.city)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.north_shore_accounts.province_char)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.north_shore_accounts.province.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.north_shore_accounts.email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.north_shore_accounts.email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.north_shore_accounts.phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.north_shore_accounts.phone)
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <h4 class="admin-subheading">Payment Information</h4>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.north_shore_accounts.payment_information.credit_card)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.north_shore_accounts.payment_information.credit_card)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.north_shore_accounts.payment_information.ccv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.north_shore_accounts.payment_information.ccv)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.north_shore_accounts.payment_information.exp_date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.north_shore_accounts.payment_information.exp_date)
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <h4 class="admin-subheading">Donation Amount</h4>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.amount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.amount)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Delete a Donation", "Delete", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+<p>
+    @*@Html.ActionLink("Delete a Donor Account", "DelAcc", new { id = Model.id }) |
+        @Html.ActionLink("Delete a Donors Account and Payment History", "DelP", new { id = Model.id }) |*@
+</p>

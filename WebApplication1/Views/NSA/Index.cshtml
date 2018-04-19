@@ -1,0 +1,28 @@
+﻿@model IEnumerable<WebApplication1.Models.north_shore_accounts>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<h2>
+    Your donation makes access to quality health care possible.
+</h2>
+<p>
+    Ontario hospitals are working harder than ever, but tax dollars alone aren't always enough to keep up.  The North Shore Health Network Foundation relies on your generous gift to replace outdated medical equipment, purchase innovative medical technology, and boost patient services. This not only improves patient outcomes, but sustains our access to local health care - now and in the future.
+</p>
+
+@* IF THE USER EXISTS, SEND THE SESSION ID AS THE ID ATTRIBUTE. OTHERWISE, THEY AREN'T LOGGED IN/WILL DONATE AS ANONYMOUS *@
+@if (Session["userId"] != null)
+{
+    <button class="btn btn-info">@Html.ActionLink("DONATE", "Create", "NSA", new { id = Session["userId"] })</button>
+}
+else
+{
+    <button class="btn btn-info">@Html.ActionLink("DONATE", "Create", "NSA")</button>
+}
+
+
+

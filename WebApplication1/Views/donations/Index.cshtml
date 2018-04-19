@@ -1,0 +1,80 @@
+﻿@model IEnumerable<WebApplication1.Models.donation>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (Session["role"] != null)
+{
+    if (Session["role"].ToString() == "ADM")
+    {
+        <h1>Welcome Back Admin</h1>
+    }
+}
+
+<p>
+    @Html.ActionLink("Create A New Donor", "Create")
+</p>
+
+<h2>Donors Information</h2>
+<table class="table table-hover table-responsive-lg">
+    <tr>
+        <th scope="col">
+            @Html.DisplayNameFor(model => model.id)
+        </th>
+        <th scope="col">
+            @Html.DisplayNameFor(model => model.account_id)
+        </th>
+        <th scope="col">
+            @Html.DisplayNameFor(model => model.north_shore_accounts.fname)
+        </th>
+        <th scope="col">
+            @Html.DisplayNameFor(model => model.north_shore_accounts.lname)
+        </th>
+        <th scope="col">
+            @Html.DisplayNameFor(model => model.amount)
+        </th>
+        <th scope="col">
+            @Html.DisplayNameFor(model => model.north_shore_accounts.payment_information.credit_card)
+        </th>
+        <th scope="col">
+            @Html.DisplayNameFor(model => model.north_shore_accounts.payment_information.exp_date)
+        </th>
+        <th scope="col">
+            Donor Options
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td scope="row">
+                @Html.DisplayFor(modelItem => item.id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.account_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.north_shore_accounts.fname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.north_shore_accounts.lname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.north_shore_accounts.payment_information.credit_card)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.north_shore_accounts.payment_information.exp_date)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.id })
+            </td>
+        </tr>
+    }
+</table>
+@Html.ActionLink("See All Accounts", "AcctPayInfo")

@@ -1,0 +1,504 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SuperWomanModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="donations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="amount" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="account_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="images">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="news_article_id" Type="int" Nullable="false" />
+          <Property Name="img_src" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="is_main" Type="int" Nullable="false" />
+          <Property Name="caption" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="news">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="varchar(max)" Nullable="false" />
+          <Property Name="pub_date" Type="datetime" Nullable="false" />
+          <Property Name="article_content" Type="varchar(max)" Nullable="false" />
+          <Property Name="article_summary" Type="varchar(max)" Nullable="false" />
+          <Property Name="author" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="north_shore_accounts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="int" />
+          <Property Name="fname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="lname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="address" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="city" Type="char" MaxLength="50" Nullable="false" />
+          <Property Name="province_char" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="phone" Type="varchar" MaxLength="10" />
+          <Property Name="payment_info" Type="int" />
+        </EntityType>
+        <EntityType Name="payment_information">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="credit_card" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ccv" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="exp_date" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="provinces">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="roles">
+          <Key>
+            <PropertyRef Name="role_code" />
+          </Key>
+          <Property Name="role_code" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="role_description" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="role_name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="user_role" Type="char" MaxLength="3" Nullable="false" />
+        </EntityType>
+        <Association Name="donations_account_id_fk">
+          <End Role="north_shore_accounts" Type="Self.north_shore_accounts" Multiplicity="1" />
+          <End Role="donations" Type="Self.donations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="north_shore_accounts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="donations">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="image_news_article_id_fk">
+          <End Role="news" Type="Self.news" Multiplicity="1" />
+          <End Role="images" Type="Self.images" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="news">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="images">
+              <PropertyRef Name="news_article_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="north_shore_accounts_fk">
+          <End Role="payment_information" Type="Self.payment_information" Multiplicity="0..1" />
+          <End Role="north_shore_accounts" Type="Self.north_shore_accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="payment_information">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="north_shore_accounts">
+              <PropertyRef Name="payment_info" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="north_shore_accounts_province_fk">
+          <End Role="provinces" Type="Self.provinces" Multiplicity="1" />
+          <End Role="north_shore_accounts" Type="Self.north_shore_accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="provinces">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="north_shore_accounts">
+              <PropertyRef Name="province_char" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="north_shore_accounts_user_id_fk">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="north_shore_accounts" Type="Self.north_shore_accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="north_shore_accounts">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="users_user_role_fk">
+          <End Role="roles" Type="Self.roles" Multiplicity="1" />
+          <End Role="users" Type="Self.users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="roles">
+              <PropertyRef Name="role_code" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="user_role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SuperWomanModelStoreContainer">
+          <EntitySet Name="donations" EntityType="Self.donations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="images" EntityType="Self.images" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="news" EntityType="Self.news" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="north_shore_accounts" EntityType="Self.north_shore_accounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="payment_information" EntityType="Self.payment_information" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="provinces" EntityType="Self.provinces" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="roles" EntityType="Self.roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="donations_account_id_fk" Association="Self.donations_account_id_fk">
+            <End Role="north_shore_accounts" EntitySet="north_shore_accounts" />
+            <End Role="donations" EntitySet="donations" />
+          </AssociationSet>
+          <AssociationSet Name="image_news_article_id_fk" Association="Self.image_news_article_id_fk">
+            <End Role="news" EntitySet="news" />
+            <End Role="images" EntitySet="images" />
+          </AssociationSet>
+          <AssociationSet Name="north_shore_accounts_fk" Association="Self.north_shore_accounts_fk">
+            <End Role="payment_information" EntitySet="payment_information" />
+            <End Role="north_shore_accounts" EntitySet="north_shore_accounts" />
+          </AssociationSet>
+          <AssociationSet Name="north_shore_accounts_province_fk" Association="Self.north_shore_accounts_province_fk">
+            <End Role="provinces" EntitySet="provinces" />
+            <End Role="north_shore_accounts" EntitySet="north_shore_accounts" />
+          </AssociationSet>
+          <AssociationSet Name="north_shore_accounts_user_id_fk" Association="Self.north_shore_accounts_user_id_fk">
+            <End Role="users" EntitySet="users" />
+            <End Role="north_shore_accounts" EntitySet="north_shore_accounts" />
+          </AssociationSet>
+          <AssociationSet Name="users_user_role_fk" Association="Self.users_user_role_fk">
+            <End Role="roles" EntitySet="roles" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SuperWomanModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="donation">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="amount" Type="Decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="account_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="north_shore_accounts" Relationship="Self.donations_account_id_fk" FromRole="donations" ToRole="north_shore_accounts" />
+        </EntityType>
+        <EntityType Name="north_shore_accounts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="Int32" />
+          <Property Name="fname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="city" Type="String" MaxLength="50" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="province_char" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="phone" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="payment_info" Type="Int32" />
+          <NavigationProperty Name="donations" Relationship="Self.donations_account_id_fk" FromRole="north_shore_accounts" ToRole="donations" />
+          <NavigationProperty Name="payment_information" Relationship="Self.north_shore_accounts_fk" FromRole="north_shore_accounts" ToRole="payment_information" />
+          <NavigationProperty Name="province" Relationship="Self.north_shore_accounts_province_fk" FromRole="north_shore_accounts" ToRole="provinces" />
+          <NavigationProperty Name="user" Relationship="Self.north_shore_accounts_user_id_fk" FromRole="north_shore_accounts" ToRole="users" />
+        </EntityType>
+        <EntityType Name="payment_information">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="credit_card" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ccv" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="exp_date" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="north_shore_accounts" Relationship="Self.north_shore_accounts_fk" FromRole="payment_information" ToRole="north_shore_accounts" />
+        </EntityType>
+        <EntityType Name="province">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="north_shore_accounts" Relationship="Self.north_shore_accounts_province_fk" FromRole="provinces" ToRole="north_shore_accounts" />
+        </EntityType>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="role_code" />
+          </Key>
+          <Property Name="role_code" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="role_description" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="role_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="users" Relationship="Self.users_user_role_fk" FromRole="roles" ToRole="users" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="user_role" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="north_shore_accounts" Relationship="Self.north_shore_accounts_user_id_fk" FromRole="users" ToRole="north_shore_accounts" />
+          <NavigationProperty Name="role" Relationship="Self.users_user_role_fk" FromRole="users" ToRole="roles" />
+        </EntityType>
+        <Association Name="donations_account_id_fk">
+          <End Role="north_shore_accounts" Type="Self.north_shore_accounts" Multiplicity="1" />
+          <End Role="donations" Type="Self.donation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="north_shore_accounts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="donations">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="north_shore_accounts_fk">
+          <End Role="payment_information" Type="Self.payment_information" Multiplicity="0..1" />
+          <End Role="north_shore_accounts" Type="Self.north_shore_accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="payment_information">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="north_shore_accounts">
+              <PropertyRef Name="payment_info" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="north_shore_accounts_province_fk">
+          <End Role="provinces" Type="Self.province" Multiplicity="1" />
+          <End Role="north_shore_accounts" Type="Self.north_shore_accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="provinces">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="north_shore_accounts">
+              <PropertyRef Name="province_char" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="north_shore_accounts_user_id_fk">
+          <End Role="users" Type="Self.user" Multiplicity="0..1" />
+          <End Role="north_shore_accounts" Type="Self.north_shore_accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="north_shore_accounts">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="users_user_role_fk">
+          <End Role="roles" Type="Self.role" Multiplicity="1" />
+          <End Role="users" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="roles">
+              <PropertyRef Name="role_code" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="user_role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NSHNContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="donations" EntityType="Self.donation" />
+          <EntitySet Name="north_shore_accounts" EntityType="Self.north_shore_accounts" />
+          <EntitySet Name="payment_information" EntityType="Self.payment_information" />
+          <EntitySet Name="provinces" EntityType="Self.province" />
+          <EntitySet Name="roles" EntityType="Self.role" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <AssociationSet Name="donations_account_id_fk" Association="Self.donations_account_id_fk">
+            <End Role="north_shore_accounts" EntitySet="north_shore_accounts" />
+            <End Role="donations" EntitySet="donations" />
+          </AssociationSet>
+          <AssociationSet Name="north_shore_accounts_fk" Association="Self.north_shore_accounts_fk">
+            <End Role="payment_information" EntitySet="payment_information" />
+            <End Role="north_shore_accounts" EntitySet="north_shore_accounts" />
+          </AssociationSet>
+          <AssociationSet Name="north_shore_accounts_province_fk" Association="Self.north_shore_accounts_province_fk">
+            <End Role="provinces" EntitySet="provinces" />
+            <End Role="north_shore_accounts" EntitySet="north_shore_accounts" />
+          </AssociationSet>
+          <AssociationSet Name="north_shore_accounts_user_id_fk" Association="Self.north_shore_accounts_user_id_fk">
+            <End Role="users" EntitySet="users" />
+            <End Role="north_shore_accounts" EntitySet="north_shore_accounts" />
+          </AssociationSet>
+          <AssociationSet Name="users_user_role_fk" Association="Self.users_user_role_fk">
+            <End Role="roles" EntitySet="roles" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+          <EntitySet Name="images" EntityType="SuperWomanModel.image" />
+          <EntitySet Name="news" EntityType="SuperWomanModel.news" />
+          <AssociationSet Name="image_news_article_id_fk" Association="SuperWomanModel.image_news_article_id_fk">
+            <End Role="news" EntitySet="news" />
+            <End Role="image" EntitySet="images" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="image">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="news_article_id" Type="Int32" Nullable="false" />
+          <Property Name="img_src" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="is_main" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="news" Relationship="SuperWomanModel.image_news_article_id_fk" FromRole="image" ToRole="news" />
+          <Property Name="caption" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="news">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="pub_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="article_content" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="article_summary" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="images" Relationship="SuperWomanModel.image_news_article_id_fk" FromRole="news" ToRole="image" />
+          <Property Name="author" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="image_news_article_id_fk">
+          <End Type="SuperWomanModel.news" Role="news" Multiplicity="1" />
+          <End Type="SuperWomanModel.image" Role="image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="news">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="image">
+              <PropertyRef Name="news_article_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SuperWomanModelStoreContainer" CdmEntityContainer="NSHNContext">
+          <EntitySetMapping Name="donations">
+            <EntityTypeMapping TypeName="SuperWomanModel.donation">
+              <MappingFragment StoreEntitySet="donations">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="north_shore_accounts">
+            <EntityTypeMapping TypeName="SuperWomanModel.north_shore_accounts">
+              <MappingFragment StoreEntitySet="north_shore_accounts">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="fname" ColumnName="fname" />
+                <ScalarProperty Name="lname" ColumnName="lname" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="province_char" ColumnName="province_char" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="payment_info" ColumnName="payment_info" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="payment_information">
+            <EntityTypeMapping TypeName="SuperWomanModel.payment_information">
+              <MappingFragment StoreEntitySet="payment_information">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="credit_card" ColumnName="credit_card" />
+                <ScalarProperty Name="ccv" ColumnName="ccv" />
+                <ScalarProperty Name="exp_date" ColumnName="exp_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="provinces">
+            <EntityTypeMapping TypeName="SuperWomanModel.province">
+              <MappingFragment StoreEntitySet="provinces">
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="roles">
+            <EntityTypeMapping TypeName="SuperWomanModel.role">
+              <MappingFragment StoreEntitySet="roles">
+                <ScalarProperty Name="role_code" ColumnName="role_code" />
+                <ScalarProperty Name="role_description" ColumnName="role_description" />
+                <ScalarProperty Name="role_name" ColumnName="role_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="SuperWomanModel.user">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="user_role" ColumnName="user_role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="images">
+            <EntityTypeMapping TypeName="SuperWomanModel.image">
+              <MappingFragment StoreEntitySet="images">
+                <ScalarProperty Name="caption" ColumnName="caption" />
+                <ScalarProperty Name="is_main" ColumnName="is_main" />
+                <ScalarProperty Name="img_src" ColumnName="img_src" />
+                <ScalarProperty Name="news_article_id" ColumnName="news_article_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="news">
+            <EntityTypeMapping TypeName="SuperWomanModel.news">
+              <MappingFragment StoreEntitySet="news">
+                <ScalarProperty Name="author" ColumnName="author" />
+                <ScalarProperty Name="article_summary" ColumnName="article_summary" />
+                <ScalarProperty Name="article_content" ColumnName="article_content" />
+                <ScalarProperty Name="pub_date" ColumnName="pub_date" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

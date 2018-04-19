@@ -1,0 +1,28 @@
+﻿@model WebApplication1.Models.news
+
+@{
+    ViewBag.Title = "EditCaption";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit Caption</h2>
+<p>Add a small caption for your photos</p>
+
+@Html.Action("DisplayTestAjax", "news", new { Model.id })
+
+@using (Html.BeginForm("SaveCaption", "news", new { Model.id }))
+{
+    @Html.AntiForgeryToken()
+
+    @*@Html.Action("DisplayPhotoCaptionCreate", "news", new { Model.id })*@
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

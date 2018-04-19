@@ -1,0 +1,17 @@
+﻿@model WebApplication1.Models.image
+
+    @*@Html.AntiForgeryToken()*@
+    
+<div class="form-horizontal">
+    <h4>Upload New Images</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.files, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.files, "", new { @type = "file", @multiple = "multiple", @class="form-control-file" })
+            @Html.ValidationMessageFor(model => model.files, "", htmlAttributes: new { @class = "text-danger" })
+        </div>
+    </div>
+</div>

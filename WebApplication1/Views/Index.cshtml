@@ -1,0 +1,82 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_IndexLayout.cshtml";
+}
+
+@if (Session["donated"] != null)
+{
+    if (Session["donated"].ToString() == "true")
+    {
+        <p class="text-center">
+            @Html.Action("Thanks", "Donations")
+        </p>
+    }
+
+    Session["donated"] = "";
+}
+
+@* START HEADER IMAGE *@
+
+@*<div class="image-bg-fixed-height">
+    </div>*@
+
+@using (Html.BeginForm())
+{
+    <div class="container container-icon-wrapper">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 text-center d-flex flex-column align-items-center">
+                <div class="icon-img-container">
+                    <img src="~/Images/download.svg" alt="Login logo" class="img-thumbnail index-icon" />
+                </div>
+                <a href="~/Account/Login"><input type="button" id="in-btn-1" class="btn btn-outline-primary" value="Login" /></a>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 text-center d-flex flex-column align-items-center">
+                <div class="icon-img-container">
+                    <img src="~/Images/appointment.svg" alt="Appointments" class="img-thumbnail index-icon" />
+                </div>
+                <input type="button" id="in-btn-2" class="btn btn-outline-secondary" value="Appointments" />
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 text-center d-flex flex-column align-items-center">
+                <div class="icon-img-container">
+                    <img src="~/Images/results.svg" alt="Lab Results" class="img-thumbnail index-icon" />
+                </div>
+                <input type="button" id="in-btn-3" class="btn btn-outline-success" value="Lab Results" />
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 text-center d-flex flex-column align-items-center">
+                <div class="icon-img-container">
+                    <img src="~/Images/locations.svg" alt="Locations" class="img-thumbnail index-icon" />
+                </div>
+                <input type="button" id="in-btn-4" class="btn btn-outline-info" value="Locations" />
+            </div>
+        </div>
+    </div>
+}
+
+<h2>News</h2>
+<div class="card-deck">
+    <div class="card">
+        <img class="card-img-top" src="~/Images/news-1.jpg" alt="Article 1">
+        <div class="card-body">
+            <h5 class="card-title">New Emergency Wing</h5>
+            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        </div>
+    </div>
+    <div class="card">
+        <img class="card-img-top" src="~/Images/news-2.jpg" alt="Article 2">
+        <div class="card-body">
+            <h5 class="card-title">10 New MRI's</h5>
+            <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        </div>
+    </div>
+    <div class="card">
+        <img class="card-img-top" src="~/Images/news-3.jpg" alt="Article 3">
+        <div class="card-body">
+            <h5 class="card-title">First Robotic Arm Replacement</h5>
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        </div>
+    </div>
+</div>
+

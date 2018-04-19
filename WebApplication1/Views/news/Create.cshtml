@@ -1,0 +1,72 @@
+﻿@model WebApplication1.Models.news
+
+@{
+    /**/
+
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create</h2>
+<p class="text-danger">@ViewBag.ErrorMssg</p>
+@using (Html.BeginForm("Create", "news", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.id)
+<div class="form-horizontal">
+    <h4>Create a New Article</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.id)
+    <div class="form-group">
+        @Html.LabelFor(model => model.title, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.title, new { htmlAttributes = new { @class = "form-control news-editor-input" } })
+            @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.author, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.author, new { htmlAttributes = new { @class = "form-control news-editor-input" } })
+            @Html.ValidationMessageFor(model => model.author, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.article_summary, htmlAttributes: new { @class = "control-label col-md-5" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.article_summary, 5, 500, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.article_summary, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.article_content, htmlAttributes: new { @class = "control-label col-md-5" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.article_content, 20, 500, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.article_content, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @Html.Action("DisplayFileUpload", "news")
+
+    @*@Html.Action("DisplayTestAjax", "news", new { id = Model.id})*@
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+@* VARIOUS WAYS TO ADD A MULTILINE
+    https://stackoverflow.com/questions/6217908/how-do-i-specify-the-columns-and-rows-of-a-multiline-editor-for-in-asp-mvc?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa *@

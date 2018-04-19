@@ -1,0 +1,103 @@
+﻿@model IEnumerable<WebApplication1.Models.news>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+@if (Session["role"] != null)
+{
+    if (Session["role"].ToString() == "ADM")
+    {
+        <p>
+           @Html.ActionLink("Write New Article", "Create")
+        </p>
+    }
+}
+
+
+@foreach (var item in Model)
+{
+    if (Session["role"] != null)
+    {
+        if (Session["role"].ToString() == "ADM")
+        {
+            <ul class="list-unstyled">
+                <li class="media rounded border border-secondary bg-white align-items-center news-list-item">
+                    @Html.Action("MainImgs", "news", new { id = item.id })
+                    @*<img class="mr-3 article_images" src="~/News_Images/@item.id.ToString()/@item.img_src.ToString()" alt="Generic placeholder image">*@
+                    <div class="media-body">
+                        <h5 class="mt-0 mb-1">@Html.DisplayFor(model => item.title)</h5>
+                        @Html.DisplayFor(model => item.article_summary)
+                        <p>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        }
+    }
+    else
+    {
+        <div class="article-list-margin list-group">
+            <a href="@Url.Action("Details", "news", new { id = item.id })" class="list-group-item list-group-item-action flex-column align-items-start">
+                <ul class="list-unstyled">
+                    <li class="media align-items-center">
+                        @Html.Action("MainImgs", "news", new { id = item.id })
+                        @*<img class="mr-3 article_images" src="~/News_Images/@item.id.ToString()/@item.img_src.ToString()" alt="Generic placeholder image">*@
+                        <div class="media-body">
+                            <h5 class="mb-1">@Html.DisplayFor(model => item.title)</h5>
+                            <p class="mb-1">@Html.DisplayFor(model => item.article_summary)</p>
+                            <small><span>By: </span><strong>@Html.DisplayFor(model => item.author)</strong></small>
+                            <small><span>Published: </span><strong>@Html.DisplayFor(model => item.pub_date)</strong></small>
+                        </div>
+                    </li>
+                </ul>
+            </a>
+        </div>
+    }
+}
+
+
+@*<table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.pub_date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.article_content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.article_summary)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.pub_date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.article_content)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.article_summary)
+                </td>
+                <td>
+
+                </td>
+            </tr>
+        }
+    </table>*@

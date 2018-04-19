@@ -1,0 +1,18 @@
+﻿@model IEnumerable<WebApplication1.Models.donation>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.amount)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.amount)
+        </td>
+    </tr>
+}
+
+</table>

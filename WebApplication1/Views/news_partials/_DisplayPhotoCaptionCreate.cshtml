@@ -1,0 +1,15 @@
+﻿@model IEnumerable<WebApplication1.Models.image>
+
+@foreach (var item in Model)
+{
+    using (Ajax.BeginForm("SaveImgCaption", "news", new { id = item.news_article_id }, new AjaxOptions { HttpMethod = "POST" }))
+    {
+        <div class="col-md-2">
+            @Html.HiddenFor(model => item.id)
+            <img src="~/News_Images/@item.news.id.ToString()/@item.img_src.ToString()" alt="@item.news.title" class="img-thumbnail" />
+            @Html.EditorFor(model => item.caption)
+        </div>
+        <input type="submit" value="save caption" class="btn btn-default" />
+    }
+
+}

@@ -1,0 +1,109 @@
+﻿@model WebApplication1.Models.north_shore_accounts
+
+@{
+    ViewBag.Title = "Payment Information Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <h4>Payment and Account Details</h4>
+    <hr />
+    <div>
+        <h4 class="admin-subheading">Account Information</h4>
+        <dl class="dl-horizontal">
+            @*@Html.HiddenFor(model => model.id)
+                @Html.HiddenFor(model => model.account_id)
+                @Html.HiddenFor(model => model.north_shore_accounts.id)
+                @Html.HiddenFor(model => model.north_shore_accounts.payment_information.id)
+                @Html.HiddenFor(model => model.north_shore_accounts.payment_info)*@
+
+            <dt>
+                @Html.DisplayNameFor(model => model.fname)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.fname)
+            </dd>
+
+
+            <dt>
+                @Html.DisplayNameFor(model => model.lname)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.lname)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.address)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.address)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.city)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.city)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.province.name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.province.name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.email)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.email)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.phone)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.phone)
+            </dd>
+        </dl>
+    </div>
+    <h4 class="admin-subheading">Payment Information</h4>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.payment_information.credit_card)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.payment_information.credit_card)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.payment_information.ccv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.payment_information.ccv)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.payment_information.exp_date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.payment_information.exp_date)
+        </dd>
+    </dl>
+</div>
+
+<p>
+    @Html.ActionLink("Back to Accounts", "AcctPayInfo") |
+    @Html.ActionLink("Delete Donor Account", "DelP", new { id = Model.payment_information.id })
+</p>

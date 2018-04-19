@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row d-flex justify-content-center">
+    <div class="col-xs-12 text-center">
+        <h1>OOPS!</h1>
+        <p>This is embarassing, looks like an error occured!</p>
+        <p>@ViewBag.GenericException</p>
+        <p>@ViewBag.DbExceptionMessage</p>
+        <p>@ViewBag.SqlExceptionMessage</p>
+        <img id="error-img" src="~/Images/questionMark.png" />
+        <div>
+            @Html.ActionLink("Back to Safety", "Index", "Navigate", null, new { @class = "btn btn-outline-secondary" })
+        </div>
+    </div>
+</div>

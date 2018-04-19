@@ -1,0 +1,54 @@
+﻿@model IEnumerable<WebApplication1.Models.north_shore_accounts>
+
+	@{
+	ViewBag.Title = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	}
+	<h1>All Donation Accounts</h1>
+	<table class="table table-hover table-responsive-lg">
+		<tr>
+			<th scope="col">
+				@Html.DisplayNameFor(model => model.fname)
+			</th>
+			<th scope="col">
+				@Html.DisplayNameFor(model => model.lname)
+			</th>
+			<th scope="col">
+				@Html.DisplayNameFor(model => model.payment_information.credit_card)
+			</th>
+			<th scope="col">
+				@Html.DisplayNameFor(model => model.payment_information.ccv)
+			</th>
+			<th scope="col">
+				@Html.DisplayNameFor(model => model.payment_information.exp_date)
+			</th>
+			<th scope="col">
+				Account Details
+			</th>
+		</tr>
+
+		@foreach (var item in Model)
+		{
+		<tr>
+			<td scope="row">
+				@Html.DisplayFor(modelItem => item.fname)
+			</td>Ac
+			<td>
+				@Html.DisplayFor(modelItem => item.lname)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.payment_information.credit_card)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.payment_information.ccv)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.payment_information.exp_date)
+			</td>
+            <td>
+                @Html.ActionLink("Account and Payment Details", "AccountInfoDetails", new { id = item.id })
+            </td>
+		</tr>
+		}
+	</table>
+	@Html.ActionLink("See all Donations", "Index")

@@ -1,0 +1,35 @@
+﻿@model WebApplication1.Models.donation
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>donation</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.amount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.amount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.north_shore_accounts.fname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.north_shore_accounts.fname)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

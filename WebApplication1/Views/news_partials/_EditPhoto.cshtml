@@ -1,0 +1,16 @@
+﻿@model IEnumerable<WebApplication1.Models.image>
+
+
+@foreach (var image in Model)
+{
+    if (image.img_src != null)
+    {
+        <div class="col-md-6">
+            <div class="col-md-6">
+                <img src="@Url.Content("~/News_Images/" + image.news.id.ToString()  + "/" + image.img_src.ToString())" class="article_images" alt="@image.news.title" />
+                @Html.ActionLink("Remove Photo", "DeletePhoto", new { @id = image.id })
+            </div>
+        </div>
+
+    }
+}

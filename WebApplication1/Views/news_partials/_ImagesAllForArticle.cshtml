@@ -1,0 +1,9 @@
+﻿@model IEnumerable<WebApplication1.Models.image>
+
+@foreach(var item in Model)
+{
+    <div class="col-md-2">
+        <img src="~/News_Images/@item.news.id.ToString()/@item.img_src.ToString()" alt="@item.news.title" class="img-thumbnail" />
+        @Html.DisplayFor(model => item.caption);
+    </div>
+}
